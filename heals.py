@@ -82,7 +82,7 @@ def cure(wounds: str, level: int) -> None:
     print(f'{roll} + {mod} = {roll + mod} damage healed.')
 
 def main() -> None:
-    pass
+    cure('serious', 10)
 
 if __name__ == "__main__":
     main()

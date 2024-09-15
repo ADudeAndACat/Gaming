@@ -1,38 +1,25 @@
-# Get inputs from the user or another source
-ROLL = int(input("Roll: "))
-LEVEL = int(input("Alchemist level: "))
-DC = int(input("DC: "))
-PRICE = int(input("Price (sp): "))
-CF_yn = input("Crafter's Fortune (Y/N): ")
-SWIFT_ALCH = input("Swift Alchemy (Y/N): ")
-ACC = int(input("Acceleration (+10 x?): ")) * 10
+def crafting(roll: int = 10, dc: int = 20, price: int = 100, cf_yn: str = "n", acc: int = 0) -> str:
+    # Apply Crafter's Fortune bonus if applicable
+    cf_bonus: int = 5 if cf_yn.lower() == 'y' else 0
 
-def craftc(ROLL: int = 10, LEVEL: int = 0, DC: int = 20, PRICE: int = 100, CF_yn: str = "n", ACC: int = 1,
-           SWIFT_ALCH: str = "n") -> str:
-    # Constants and variables
-    if CF_yn.lower() == "y":
-        CF: int = 5
-    else:
-        CF: int = 0
-
-    if SWIFT_ALCH.lower() == "y":
-        week: int = 3.5
-    else:
-        week: int = 7
-
-    # Calculations
-    days: float = week / ((((ROLL + LEVEL) + CF) * (DC + ACC)) / PRICE)
+    # Calculate days, hours, and cost
+    days: float = ((roll + cf_bonus) * (dc + acc)) / price
     hours: float = days * 24
-    cost: float = PRICE / 3
+    cost: float = price / 3
 
-    # Round the float values to two decimal places
-    days = round(days, 2)
-    hours = round(hours, 2)
-    cost = round(cost, 2)
+    # Return the formatted result, rounding to two decimal places
+    return f"{round(days, 2)} days / {round(hours, 2)} hours / {round(cost, 2)} sp"
 
-    return f"TIME: {days} days ({hours} hours) / COST: {cost} sp"
+def main() -> None:
+    # Get inputs from the user
+    roll = int(input("Roll: "))
+    dc = int(input("DC: "))
+    price = int(input("Price (sp): "))
+    cf_yn = input("Crafter's Fortune (Y/N): ")
+    acc = int(input("Acceleration (x?): ")) * 10
 
+    # Display the result of crafting
+    print(crafting(roll, dc, price, cf_yn, acc))
 
-# Call the function with the provided arguments
-result = craftc(ROLL, LEVEL, DC, PRICE, CF_yn, ACC, SWIFT_ALCH)
-print(result)
+if __name__ == '__main__':
+    main()
