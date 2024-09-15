@@ -1,19 +1,61 @@
+import json
 from random import randint
 from typing import List
+from datetime import datetime
+import os
+
 
 class DiceRoller:
     def __init__(self, sides: int, mod: int = 0, times: int = 1) -> None:
+        """
+        Initializes the DiceRoller with the number of sides, modifier, and the number of rolls.
+
+        Args:
+            sides (int): The number of sides on the dice.
+            mod (int, optional): The modifier to add to the roll. Defaults to 0.
+            times (int, optional): The number of rolls to make. Defaults to 1.
+        """
         self.sides = sides
         self.mod = mod
         self.times = times
 
+    def add_roll_to_json(self, roll: int, filename: str = 'rolls.json') -> None:
+        """
+        Appends a dice roll to a list under the current date key in a JSON file.
+
+        Args:
+            roll (int): The dice roll result to append.
+            filename (str, optional): The name of the JSON file to store the rolls. Defaults to 'rolls.json'.
+        """
+        current_date = datetime.now().strftime('%Y-%m-%d')
+
+        if os.path.exists(filename):
+            with open(filename, 'r') as file:
+                data = json.load(file)
+        else:
+            data = {}
+
+        if current_date in data:
+            data[current_date].append(roll)
+        else:
+            data[current_date] = [roll]
+
+        with open(filename, 'w') as file:
+            json.dump(data, file)
+
     def roll(self) -> List[str]:
         """
-        Rolls the dice the specified number of times and applies the modifier.
-        Returns a list of formatted strings showing the result of each roll.
+        Rolls the dice the specified number of times, applies the modifier, and appends each roll to a JSON file.
+
+        Returns:
+            List[str]: A list of formatted strings showing the result of each roll.
         """
-        return [f'{die_roll} + {self.mod} = {die_roll + self.mod}'
-                for die_roll in [randint(1, self.sides) for _ in range(self.times)]]
+        results = []
+        for _ in range(self.times):
+            roll = randint(1, self.sides)
+            self.add_roll_to_json(roll)  # Append the roll to the JSON file
+            results.append(f'{roll} + {self.mod} = {roll + self.mod}')
+        return results
 
 # Each polyhedron dice as functions that create instances of the class
 def roll_d20(mod: int = 0, times: int = 1) -> None:
