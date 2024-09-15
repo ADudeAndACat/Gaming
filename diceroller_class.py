@@ -45,7 +45,7 @@ def roll_d100(mod: int = 0, times: int = 1) -> None:
     print(d100.roll())
 
 def main() -> None:
-    roll_d20(16)
+    roll_d20(16, 3A)
 
 if __name__ == "__main__":
     main()
