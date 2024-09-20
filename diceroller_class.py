@@ -1,9 +1,7 @@
-import json
+import json, os
 from random import randint
 from typing import List
 from datetime import datetime
-import os
-
 
 class DiceRoller:
     def __init__(self, sides: int, mod: int = 0, times: int = 1) -> None:

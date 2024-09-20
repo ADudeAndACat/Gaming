@@ -1,8 +1,7 @@
-import json
+import json, os
 from random import randint
 from typing import List
 from datetime import datetime
-import os
 
 def add_roll_to_json(roll: int, filename: str = 'rolls.json') -> None:
     """
@@ -82,7 +81,7 @@ def d100(mod: int = 0, times: int = 1) -> None:
     print(d(100, mod, times))
 
 def main() -> None:
-    d20(16)
+    d20(14)
 
 if __name__ == "__main__":
     main()
