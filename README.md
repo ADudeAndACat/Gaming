@@ -73,7 +73,21 @@ pip install streamlit==1.41.1 pandas==2.2.3 numpy==2.2.0 plotly==5.24.1
 
 ## Usage
 
-### Dice Rolling
+### Using the Main Interface
+The easiest way to use all utilities is through the main interface:
+```bash
+python main.py
+```
+This provides an interactive menu to access all features:
+1. Dice Rolling - Test different dice rolling implementations
+2. Character Stats - Generate character stats for different systems
+3. Healing Spells - Calculate healing spell results
+4. Crafting - Calculate crafting times and costs
+5. Run All Demonstrations - Try everything at once
+
+### Individual Module Usage
+
+#### Dice Rolling
 ```python
 from diceroller import d20, d6
 
@@ -82,6 +96,41 @@ d20(5)
 
 # Roll 3d6
 d6(times=3)
+
+# Using the OOP implementation
+from diceroller_class import DiceRoller
+d20_roller = DiceRoller(20)
+result = d20_roller.roll()
+```
+
+#### Character Stats
+```python
+from statsmaker import makepfstats, makedccstats
+
+# Generate Pathfinder stats
+makepfstats()
+
+# Generate DCC stats
+makedccstats()
+```
+
+#### Healing Calculator
+```python
+from heals import clw, cmw, csw, ccw
+
+# Cast Cure Light Wounds at level 3
+clw(3)
+
+# Cast Cure Critical Wounds at level 9
+ccw(9)
+```
+
+#### Crafting Calculator
+```python
+from crafting import crafting
+
+# Calculate crafting (roll=15, DC=20, price=100sp, with Crafter's Fortune)
+result = crafting(15, 20, 100, 'y')
 ```
 
 ### Roll Analysis Dashboard
@@ -137,6 +186,13 @@ streamlit run roll_analysis.py
     - Dungeon Crawl Classics
   - Various stat rolling methods
 
+### Main Interface
+- `main.py` - Central entry point for all utilities
+  - Interactive menu system
+  - Demonstrates all available features
+  - Easy access to all functionality
+  - Great starting point for new users
+
 ### Data Files
 - `rolls.json` - Storage file for dice roll history
   - JSON format for easy parsing
@@ -148,3 +204,7 @@ streamlit run roll_analysis.py
   - Lists all required Python packages
   - Includes version specifications
   - Supports multiple installation methods
+
+## Contributing
+
+Feel free to open issues or submit pull requests with improvements.
