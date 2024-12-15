@@ -1,6 +1,150 @@
-This repository is pretty simple: it holds various Python scripts I use for tabletop gaming of various sorts.
+# Gaming Utilities
 
-CRAFTING.PY -- Pathfinder crafting calculator. // 
-DICEROLLER.PY -- Dice roll simulator. // DICEROLLER_CLASS.PY -- Dice roll simulator, using Class and OOP. //
-HEALS.PY -- Currently limited to randomizing 'cure' spell results. // 
-STATSMAKER.PY -- Currently has Pathfinder and Dungeon Crawl Classics stats generators.
+A collection of Python scripts for tabletop gaming, featuring dice simulation and analysis tools.
+
+## Features
+
+### Dice Rolling
+- Multiple implementations of dice rolling (functional, OOP, and dictionary-based)
+- Support for standard polyhedral dice (d4, d6, d8, d10, d12, d20, d100)
+- Roll history tracking with JSON storage
+- Modifiers and multiple roll support
+
+### Roll Analysis Dashboard
+- Interactive web dashboard using Streamlit
+- Statistical analysis of roll history
+- Distribution visualizations
+- Fairness scoring
+- Roll pattern analysis over time
+
+### Other Utilities
+- `crafting.py` - Pathfinder crafting calculator
+- `heals.py` - Randomizer for 'cure' spell results
+- `statsmaker.py` - Character stat generators for Pathfinder and Dungeon Crawl Classics
+
+## Installation
+
+1. Clone this repository
+
+2. Choose your preferred package installation method:
+
+### Using UV (Recommended - Faster Installation)
+```bash
+# Install UV
+pip install uv
+
+# Create and activate virtual environment
+uv venv
+.venv\Scripts\activate  # On Windows
+source .venv/bin/activate  # On Unix/MacOS
+
+# Install dependencies
+uv pip install -r requirements.txt
+```
+
+### Using pip
+```bash
+# Create and activate virtual environment
+python -m venv venv
+.venv\Scripts\activate  # On Windows
+source .venv/bin/activate  # On Unix/MacOS
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Using pipenv
+```bash
+# Install pipenv if you haven't already
+pip install pipenv
+
+# Install dependencies
+pipenv install
+
+# Activate the environment
+pipenv shell
+```
+
+### Manual Installation
+If you prefer to install packages individually:
+```bash
+pip install streamlit==1.41.1 pandas==2.2.3 numpy==2.2.0 plotly==5.24.1
+```
+
+## Usage
+
+### Dice Rolling
+```python
+from diceroller import d20, d6
+
+# Roll a d20 with +5 modifier
+d20(5)
+
+# Roll 3d6
+d6(times=3)
+```
+
+### Roll Analysis Dashboard
+Run the analysis dashboard:
+```bash
+streamlit run roll_analysis.py
+```
+
+## Files
+
+### Core Dice Rolling
+- `diceroller.py` - Main functional implementation of dice rolling system
+  - Supports all standard polyhedral dice (d4-d100)
+  - Includes modifiers and multiple roll support
+  - JSON-based roll history tracking
+
+- `diceroller_class.py` - Object-oriented implementation of the dice roller
+  - Class-based approach for dice rolling
+  - Encapsulated roll logic and history management
+  - Same functionality as diceroller.py in OOP style
+
+- `diceroller_dictionary.py` - Dictionary-based implementation
+  - Uses lambda functions for dice rolling
+  - Lightweight alternative implementation
+  - Quick access to different dice types
+
+### Analysis Tools
+- `roll_analysis.py` - Interactive Streamlit dashboard for analyzing dice rolls
+  - Statistical analysis of roll history
+  - Distribution visualizations
+  - Roll pattern analysis over time
+  - Fairness assessment tools
+  - Interactive data filtering and display
+
+- `time_test.py` - Performance testing module
+  - Measures execution time of different dice rolling implementations
+  - Includes decorators for precise timing
+  - Useful for comparing implementation efficiency
+
+### Game Utilities
+- `crafting.py` - Pathfinder crafting calculator
+  - Calculates crafting costs and time
+  - Supports different crafting rules and modifiers
+
+- `heals.py` - Healing spell calculator
+  - Randomizes 'cure' spell results
+  - Supports different healing spell levels
+  - Includes modifiers for healing calculations
+
+- `statsmaker.py` - Character stat generation tools
+  - Supports multiple RPG systems:
+    - Pathfinder
+    - Dungeon Crawl Classics
+  - Various stat rolling methods
+
+### Data Files
+- `rolls.json` - Storage file for dice roll history
+  - JSON format for easy parsing
+  - Stores roll results with timestamps
+  - Used by analysis dashboard
+
+### Project Configuration
+- `requirements.txt` - Project dependencies
+  - Lists all required Python packages
+  - Includes version specifications
+  - Supports multiple installation methods

@@ -1,6 +1,6 @@
 import json, os
 from random import randint
-from typing import List
+from typing import List, Dict, Tuple
 from datetime import datetime
 
 class DiceRoller:
@@ -19,27 +19,40 @@ class DiceRoller:
 
     def add_roll_to_json(self, roll: int, filename: str = 'rolls.json') -> None:
         """
-        Appends a dice roll to a list under the current date key in a JSON file.
+        Appends a dice roll tuple (sides, roll) to a list under the current date key in a JSON file.
 
         Args:
             roll (int): The dice roll result to append.
             filename (str, optional): The name of the JSON file to store the rolls. Defaults to 'rolls.json'.
         """
-        current_date = datetime.now().strftime('%Y-%m-%d')
+        current_date: str = datetime.now().strftime('%Y-%m-%d')
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(script_dir, filename)
 
-        if os.path.exists(filename):
-            with open(filename, 'r') as file:
-                data = json.load(file)
-        else:
-            data = {}
+        try:
+            if os.path.exists(file_path):
+                try:
+                    with open(file_path, 'r') as file:
+                        data: Dict[str, List[Tuple[int, int]]] = json.load(file)
+                        if current_date in data:
+                            data[current_date] = [tuple(item) for item in data[current_date]]
+                except json.JSONDecodeError:
+                    print(f"Warning: {filename} was corrupted. Starting fresh.")
+                    data = {}
+            else:
+                data = {}
 
-        if current_date in data:
-            data[current_date].append(roll)
-        else:
-            data[current_date] = [roll]
+            roll_tuple = (self.sides, roll)
 
-        with open(filename, 'w') as file:
-            json.dump(data, file)
+            if current_date in data:
+                data[current_date].append(roll_tuple)
+            else:
+                data[current_date] = [roll_tuple]
+
+            with open(file_path, 'w') as file:
+                json.dump(data, file, indent=4)
+        except Exception as e:
+            print(f"Error while handling roll data: {str(e)}")
 
     def roll(self) -> List[str]:
         """
@@ -56,36 +69,43 @@ class DiceRoller:
         return results
 
 # Each polyhedron dice as functions that create instances of the class
-def roll_d20(mod: int = 0, times: int = 1) -> None:
-    d20 = DiceRoller(20, mod, times)
-    print(d20.roll())
+def d20(mod: int = 0, times: int = 1) -> None:
+    """Rolls 20-sided dice."""
+    roller = DiceRoller(20, mod, times)
+    print(roller.roll())
 
-def roll_d4(mod: int = 0, times: int = 1) -> None:
-    d4 = DiceRoller(4, mod, times)
-    print(d4.roll())
+def d4(mod: int = 0, times: int = 1) -> None:
+    """Rolls 4-sided dice."""
+    roller = DiceRoller(4, mod, times)
+    print(roller.roll())
 
-def roll_d6(mod: int = 0, times: int = 1) -> None:
-    d6 = DiceRoller(6, mod, times)
-    print(d6.roll())
+def d6(mod: int = 0, times: int = 1) -> None:
+    """Rolls 6-sided dice."""
+    roller = DiceRoller(6, mod, times)
+    print(roller.roll())
 
-def roll_d8(mod: int = 0, times: int = 1) -> None:
-    d8 = DiceRoller(8, mod, times)
-    print(d8.roll())
+def d8(mod: int = 0, times: int = 1) -> None:
+    """Rolls 8-sided dice."""
+    roller = DiceRoller(8, mod, times)
+    print(roller.roll())
 
-def roll_d10(mod: int = 0, times: int = 1) -> None:
-    d10 = DiceRoller(10, mod, times)
-    print(d10.roll())
+def d10(mod: int = 0, times: int = 1) -> None:
+    """Rolls 10-sided dice."""
+    roller = DiceRoller(10, mod, times)
+    print(roller.roll())
 
-def roll_d12(mod: int = 0, times: int = 1) -> None:
-    d12 = DiceRoller(12, mod, times)
-    print(d12.roll())
+def d12(mod: int = 0, times: int = 1) -> None:
+    """Rolls 12-sided dice."""
+    roller = DiceRoller(12, mod, times)
+    print(roller.roll())
 
-def roll_d100(mod: int = 0, times: int = 1) -> None:
-    d100 = DiceRoller(100, mod, times)
-    print(d100.roll())
+def d100(mod: int = 0, times: int = 1) -> None:
+    """Rolls 100-sided dice."""
+    roller = DiceRoller(100, mod, times)
+    print(roller.roll())
 
 def main() -> None:
-    roll_d20(16, 3A)
+    d20(16)
 
 if __name__ == "__main__":
     main()
