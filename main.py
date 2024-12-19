@@ -5,6 +5,7 @@ This file demonstrates the usage of all available modules and their functions.
 
 from diceroller import d20, d12, d10, d8, d6, d4, d100
 from diceroller_class import DiceRoller
+from diceroller_dictionary import roll, roll_and_log
 from statsmaker import makepfstats, makedccstats, makemoredccstats
 from heals import clw, cmw, csw, ccw
 from crafting import crafting
@@ -24,6 +25,11 @@ def demonstrate_dice_rolling():
     d20_roller = DiceRoller(20)
     print("Rolling d20:", d20_roller.roll())
     
+    # Dictionary-based implementation
+    print("\nDictionary-based Implementation:")
+    print("Rolling d20 with +3 modifier:", roll_and_log("d20", 3))
+    print("Rolling 2d6:", roll_and_log("d6", times=2))
+    
     # Multiple dice types
     print("\nVarious Dice Types:")
     print("d4:", d4())
@@ -31,6 +37,20 @@ def demonstrate_dice_rolling():
     print("d8:", d8())
     print("d10:", d10())
     print("d12:", d12())
+
+def demonstrate_dictionary_rolls():
+    """Demonstrate dictionary-based dice rolling"""
+    print("\n=== Dictionary-Based Dice Rolling ===")
+    
+    print("\nDirect dictionary access:")
+    print("d20 roll:", roll["d20"]())
+    print("d6 with +2 modifier:", roll["d6"](2))
+    print("3d4:", roll["d4"](0, 3))
+    
+    print("\nUsing roll_and_log function:")
+    print("d12 roll:", roll_and_log("d12"))
+    print("2d8 with +1:", roll_and_log("d8", 1, 2))
+    print("d100:", roll_and_log("d100"))
 
 def demonstrate_character_stats():
     """Demonstrate character stat generation"""
@@ -72,31 +92,35 @@ def demonstrate_crafting():
     print("\nCrafting Result (Roll=15, DC=20, Price=100sp, with Crafter's Fortune):")
     print(result)
 
-def main():
-    """Main function demonstrating all utilities"""
+def run_demonstrations():
+    """Interactive menu for demonstrating all utilities"""
     print("=== Gaming Utilities Demonstration ===")
     
     while True:
         print("\nAvailable Demonstrations:")
         print("1. Dice Rolling")
-        print("2. Character Stats")
-        print("3. Healing Spells")
-        print("4. Crafting")
-        print("5. Run All Demonstrations")
+        print("2. Dictionary Dice Rolling")
+        print("3. Character Stats")
+        print("4. Healing Spells")
+        print("5. Crafting")
+        print("6. Run All Demonstrations")
         print("0. Exit")
         
-        choice = input("\nSelect a demonstration (0-5): ")
+        choice = input("\nSelect a demonstration (0-6): ")
         
         if choice == '1':
             demonstrate_dice_rolling()
         elif choice == '2':
-            demonstrate_character_stats()
+            demonstrate_dictionary_rolls()
         elif choice == '3':
-            demonstrate_healing()
+            demonstrate_character_stats()
         elif choice == '4':
-            demonstrate_crafting()
+            demonstrate_healing()
         elif choice == '5':
+            demonstrate_crafting()
+        elif choice == '6':
             demonstrate_dice_rolling()
+            demonstrate_dictionary_rolls()
             demonstrate_character_stats()
             demonstrate_healing()
             demonstrate_crafting()
@@ -107,6 +131,17 @@ def main():
             print("\nInvalid choice. Please try again.")
         
         input("\nPress Enter to continue...")
+
+def main():
+    """
+    Main function - free to use for your own code.
+    You can still access the demonstrations by calling run_demonstrations()
+    """
+    # Example: To run the demonstrations menu
+    run_demonstrations()
+    
+    # Your code here
+    pass
 
 if __name__ == "__main__":
     main()
