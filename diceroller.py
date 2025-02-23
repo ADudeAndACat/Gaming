@@ -64,45 +64,56 @@ def d(sides: int, mod: int = 0, times: int = 1) -> List[Dict[str, int]]:
         add_roll_to_json(sides, roll)
     return results
 
-def format_roll_results(results: List[Dict[str, int]]) -> None:
-    """Format and print roll results."""
-    for result in results:
-        if result["modifier"] != 0:
-            print(f"{result['roll']} + {result['modifier']} = {result['total']}")
-        else:
-            print(f"{result['roll']}")
+def format_results(results: List[Dict[str, int]]) -> List[str]:
+    """
+    Converts roll result dictionaries into a list of formatted strings.
+    Each string is formatted as "roll + modifier = total".
+    """
+    return [f"{r['roll']} + {r['modifier']} = {r['total']}" for r in results]
 
 # Polyhedral dice functions
-def d20(mod: int = 0, times: int = 1) -> None:
+def d20(mod: int = 0, times: int = 1) -> List[str]:
     """Rolls 20-sided dice."""
-    format_roll_results(d(20, mod, times))
+    results = d(20, mod, times)
+    return format_results(results)
 
-def d4(mod: int = 0, times: int = 1) -> None:
+def d4(mod: int = 0, times: int = 1) -> List[str]:
     """Rolls 4-sided dice."""
-    format_roll_results(d(4, mod, times))
+    results = d(4, mod, times)
+    return format_results(results)
 
-def d6(mod: int = 0, times: int = 1) -> None:
+def d6(mod: int = 0, times: int = 1) -> List[str]:
     """Rolls 6-sided dice."""
-    format_roll_results(d(6, mod, times))
+    results = d(6, mod, times)
+    return format_results(results)
 
-def d8(mod: int = 0, times: int = 1) -> None:
+def d8(mod: int = 0, times: int = 1) -> List[str]:
     """Rolls 8-sided dice."""
-    format_roll_results(d(8, mod, times))
+    results = d(8, mod, times)
+    return format_results(results)
 
-def d10(mod: int = 0, times: int = 1) -> None:
+def d10(mod: int = 0, times: int = 1) -> List[str]:
     """Rolls 10-sided dice."""
-    format_roll_results(d(10, mod, times))
+    results = d(10, mod, times)
+    return format_results(results)
 
-def d12(mod: int = 0, times: int = 1) -> None:
+def d12(mod: int = 0, times: int = 1) -> List[str]:
     """Rolls 12-sided dice."""
-    format_roll_results(d(12, mod, times))
+    results = d(12, mod, times)
+    return format_results(results)
 
-def d100(mod: int = 0, times: int = 1) -> None:
+def d100(mod: int = 0, times: int = 1) -> List[str]:
     """Rolls 100-sided dice."""
-    format_roll_results(d(100, mod, times))
+    results = d(100, mod, times)
+    return format_results(results)
 
 def main() -> None:
-    d20(17)
+    print("ATTACK1:", d20(8))
+    print("ATTACK2:", d20(3))    
+    print("DAMAGE1:", d6(0, 4))
+    print("DAMAGE2:", d6(0, 4))
+    print("CMB1:", d20(8, 2))
+    print("CMB2:", d20(8, 2))
 
 if __name__ == "__main__":
     main()

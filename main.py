@@ -132,16 +132,17 @@ def run_demonstrations():
         
         input("\nPress Enter to continue...")
 
-def main():
-    """
-    Main function - free to use for your own code.
-    You can still access the demonstrations by calling run_demonstrations()
-    """
-    # Example: To run the demonstrations menu
-    run_demonstrations()
-    
-    # Your code here
-    pass
+def tustleby_attack():
+    print("ATTACK1:", d20(8))
+    print("ATTACK2:", d20(3))    
+    print("DAMAGE1:", d6(0, 4))
+    print("DAMAGE2:", d6(0, 4))
+    print("CMB1:", d20(8, 2))
+    print("CMB2:", d20(8, 2))
+
+def main():    
+    tustleby_attack()
 
 if __name__ == "__main__":
     main()
+    
