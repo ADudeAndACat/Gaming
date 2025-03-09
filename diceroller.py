@@ -108,12 +108,7 @@ def d100(mod: int = 0, times: int = 1) -> List[str]:
     return format_results(results)
 
 def main() -> None:
-    print("ATTACK1:", d20(8))
-    print("ATTACK2:", d20(3))    
-    print("DAMAGE1:", d6(0, 4))
-    print("DAMAGE2:", d6(0, 4))
-    print("CMB1:", d20(8, 2))
-    print("CMB2:", d20(8, 2))
+    pass
 
 if __name__ == "__main__":
     main()
