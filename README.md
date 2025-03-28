@@ -39,7 +39,7 @@ uv venv
 source .venv/bin/activate  # On Unix/MacOS
 
 # Install dependencies
-uv pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Using pip
@@ -70,6 +70,25 @@ If you prefer to install packages individually:
 ```bash
 pip install streamlit==1.41.1 pandas==2.2.3 numpy==2.2.0 plotly==5.24.1
 ```
+
+## Running Tests
+
+The project includes a comprehensive test suite using Python's unittest framework.
+
+### Running All Tests
+```bash
+# Using the run_tests.py script
+python run_tests.py
+
+# Or using unittest directly
+python -m unittest discover -s test
+```
+
+### Test Structure
+- `test/` - Contains all test files
+- Each module has a corresponding test file with the naming convention `test_*.py`
+- `test/conftest.py` - Contains shared test fixtures and utilities
+- `test/test_time.py` - Performance benchmarking tests
 
 ## Usage
 
