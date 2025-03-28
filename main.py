@@ -14,7 +14,7 @@ from demo import (demonstrate_dice_rolling, demonstrate_dictionary_rolls,
                  demonstrate_crafting, run_demonstrations, tustleby_attack)
 
 def main():
-    print(d20(21))
+    print(d20(11))
 
 
 if __name__ == "__main__":
