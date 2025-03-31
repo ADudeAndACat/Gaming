@@ -39,13 +39,13 @@ uv venv
 source .venv/bin/activate  # On Unix/MacOS
 
 # Install dependencies
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 ```
 
 ### Using pip
 ```bash
 # Create and activate virtual environment
-python -m venv venv
+python -m venv .venv
 .venv\Scripts\activate  # On Windows
 source .venv/bin/activate  # On Unix/MacOS
 
@@ -158,72 +158,40 @@ Run the analysis dashboard:
 streamlit run roll_analysis.py
 ```
 
-## Files
+## Project Structure
+
+### Core Files
+- `config.py` - Central configuration for the package
+- `utils.py` - Shared utility functions used across modules
+- `main.py` - Main entry point with an interactive menu
 
 ### Core Dice Rolling
-- `diceroller.py` - Main functional implementation of dice rolling system
-  - Supports all standard polyhedral dice (d4-d100)
-  - Includes modifiers and multiple roll support
-  - JSON-based roll history tracking
-
+- `diceroller.py` - Functional implementation of dice rolling system
 - `diceroller_class.py` - Object-oriented implementation of the dice roller
-  - Class-based approach for dice rolling
-  - Encapsulated roll logic and history management
-  - Same functionality as diceroller.py in OOP style
-
-- `diceroller_dictionary.py` - Dictionary-based implementation
-  - Uses lambda functions for dice rolling
-  - Lightweight alternative implementation
-  - Quick access to different dice types
+- `diceroller_dictionary.py` - Dictionary-based implementation with lambda functions
 
 ### Analysis Tools
 - `roll_analysis.py` - Interactive Streamlit dashboard for analyzing dice rolls
-  - Statistical analysis of roll history
-  - Distribution visualizations
-  - Roll pattern analysis over time
-  - Fairness assessment tools
-  - Interactive data filtering and display
-
-- `time_test.py` - Performance testing module
-  - Measures execution time of different dice rolling implementations
-  - Includes decorators for precise timing
-  - Useful for comparing implementation efficiency
 
 ### Game Utilities
 - `crafting.py` - Pathfinder crafting calculator
-  - Calculates crafting costs and time
-  - Supports different crafting rules and modifiers
-
 - `heals.py` - Healing spell calculator
-  - Randomizes 'cure' spell results
-  - Supports different healing spell levels
-  - Includes modifiers for healing calculations
+- `statsmaker.py` - Character stat generators
 
-- `statsmaker.py` - Character stat generation tools
-  - Supports multiple RPG systems:
-    - Pathfinder
-    - Dungeon Crawl Classics
-  - Various stat rolling methods
+## Future Enhancements
 
-### Main Interface
-- `main.py` - Central entry point for all utilities
-  - Interactive menu system
-  - Demonstrates all available features
-  - Easy access to all functionality
-  - Great starting point for new users
+We're planning several enhancements for future versions:
 
-### Data Files
-- `rolls.json` - Storage file for dice roll history
-  - JSON format for easy parsing
-  - Stores roll results with timestamps
-  - Used by analysis dashboard
-
-### Project Configuration
-- `requirements.txt` - Project dependencies
-  - Lists all required Python packages
-  - Includes version specifications
-  - Supports multiple installation methods
+1. **Database Integration** - Replace JSON storage with SQLite for better performance
+2. **Web API** - Create a REST API to allow integration with web applications
+3. **Expanded Game Systems** - Add support for more RPG systems
+4. **Plugin System** - Develop a modular system for extending functionality
+5. **User Profiles** - Allow saving of character information and preferences
 
 ## Contributing
 
-Feel free to open issues or submit pull requests with improvements.
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
