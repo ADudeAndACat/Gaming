@@ -119,14 +119,15 @@ def format_roll_result(roll: int, modifier: int = 0) -> str:
         modifier (int, optional): Modifier applied to the roll. Defaults to 0.
 
     Returns:
-        str: Formatted string representing the roll result.
+        str: Formatted string representing the roll result in format "roll + mod = total".
     """
-    if modifier == 0:
-        return str(roll)
-    
     total = roll + modifier
-    modifier_str = f"+{modifier}" if modifier > 0 else str(modifier)
-    return f"{roll} ({total} = {roll}{modifier_str})"
+    
+    if modifier == 0:
+        return f"{roll} = {total}"
+    
+    modifier_str = f"+ {modifier}" if modifier > 0 else str(modifier)
+    return f"{roll} {modifier_str} = {total}"
 
 def main() -> None:
     """

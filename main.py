@@ -32,10 +32,7 @@ from demo import (
 
 
 def main():
-    roll3d6 = d6(0, 3)
-    print(roll3d6)
-    print(sum([int(roll) for roll in roll3d6]))
-
+    print(d20(11, 3))
 
 if __name__ == "__main__":
     main()
