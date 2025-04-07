@@ -123,10 +123,12 @@ def format_roll_result(roll: int, modifier: int = 0) -> str:
     """
     total = roll + modifier
     
+    # Always include the modifier, even if it's 0
     if modifier == 0:
-        return f"{roll} = {total}"
+        modifier_str = "+ 0"
+    else:
+        modifier_str = f"+ {modifier}" if modifier > 0 else str(modifier)
     
-    modifier_str = f"+ {modifier}" if modifier > 0 else str(modifier)
     return f"{roll} {modifier_str} = {total}"
 
 def main() -> None:
