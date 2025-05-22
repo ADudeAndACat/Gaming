@@ -32,7 +32,7 @@ from demo import (
 
 
 def main():
-    print(d20(19))
+    print(d20(11))
 
 
 if __name__ == "__main__":
