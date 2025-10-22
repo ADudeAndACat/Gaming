@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d1bd97b9-1f3a-4ae8-9361-33682dd2f724" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Gaming.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/benchmark_app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/check_package.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.pyi" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/crafting.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dice_ui.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/diceroller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/diceroller_class.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/diceroller_dictionary.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gaming.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/heals.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py.backup" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mypy.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/py.typed" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pytest.ini" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/roll_analysis.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolls.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rolls.json.backup" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/run_tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shadowrun.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/statsmaker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/conftest.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_benchmark_app.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_crafting.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_demo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_diceroller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_diceroller_class.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_diceroller_dictionary.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_heals.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_roll_analysis.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_shadowrun.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_statsmaker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_time.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_runner.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/time_changer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/update_tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.pyi" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "ADudeAndACat"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/ADudeAndACat/Gaming.git",
+    "accountId": "5bef0b1a-cde6-429a-b5aa-87e26e38e178"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2yuLUoElHO4Mn1PpcgMPG8uuO1g" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.dyson_sphere_sim.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.palindrome_checker.executor&quot;: &quot;Run&quot;,
+    &quot;Python.workbench.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.fonts.default&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Lab" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="workbench" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="python" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Lab" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Lab/workbench.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.workbench" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-1f77c24022e5-d902c0275401-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.26830.99" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d1bd97b9-1f3a-4ae8-9361-33682dd2f724" name="Changes" comment="" />
+      <created>1750679529658</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1750679529658</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

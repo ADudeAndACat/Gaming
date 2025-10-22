@@ -1,0 +1,12 @@
+[project]
+name = "django-cms"
+version = "0.1.0"
+description = "Django Content Management System with Markdown support"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.0.0",
+    "markdown>=3.5.0",
+    "python-markdown-math>=0.8",
+    "pygments>=2.17.0",
+    "pillow>=10.0.0",
+]

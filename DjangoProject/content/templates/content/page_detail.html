@@ -1,0 +1,299 @@
+{% extends 'content/base.html' %}
+
+{% block title %}{{ page.title }} - Django CMS{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        border-bottom: 1px solid #dee2e6;
+    }
+    
+    .page-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+    
+    .page-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        margin: 1rem 0;
+    }
+    
+    .page-content table {
+        width: 100%;
+        margin: 1rem 0;
+        border-collapse: collapse;
+    }
+    
+    .page-content table th,
+    .page-content table td {
+        padding: 0.75rem;
+        border: 1px solid #dee2e6;
+    }
+    
+    .page-content table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+    
+    .comment-form {
+        background-color: #f8f9fa;
+        border-radius: 0.5rem;
+        padding: 2rem;
+    }
+    
+    .comment {
+        border-left: 4px solid var(--secondary-color);
+        padding: 1rem;
+        margin: 1rem 0;
+        background-color: #f8f9fa;
+        border-radius: 0.25rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <!-- Breadcrumb -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'content:home' %}">Home</a></li>
+                        {% if page.category %}
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'content:category_detail' page.category.slug %}">{{ page.category.name }}</a>
+                            </li>
+                        {% endif %}
+                        <li class="breadcrumb-item active">{{ page.title }}</li>
+                    </ol>
+                </nav>
+                
+                <h1 class="display-5 fw-bold mb-3">{{ page.title }}</h1>
+                
+                <!-- Page Meta -->
+                <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                    <div class="content-meta">
+                        <i class="fas fa-user me-1"></i>
+                        <strong>{{ page.author.get_full_name|default:page.author.username }}</strong>
+                    </div>
+                    <div class="content-meta">
+                        <i class="fas fa-calendar me-1"></i>
+                        {{ page.created_at|date:"F d, Y" }}
+                    </div>
+                    <div class="content-meta">
+                        <i class="fas fa-clock me-1"></i>
+                        {{ page.reading_time }} min read
+                    </div>
+                    {% if page.category %}
+                        <a href="{% url 'content:category_detail' page.category.slug %}" class="badge bg-primary text-decoration-none">
+                            <i class="fas fa-folder me-1"></i>{{ page.category.name }}
+                        </a>
+                    {% endif %}
+                </div>
+                
+                <!-- Tags -->
+                {% if page_tags %}
+                    <div class="mb-3">
+                        {% for tag in page_tags %}
+                            <a href="{% url 'content:tag_detail' tag.slug %}" class="tag">
+                                <i class="fas fa-tag me-1"></i>{{ tag.name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <!-- Excerpt -->
+                {% if page.excerpt %}
+                    <p class="lead text-muted">{{ page.excerpt }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <article class="page-content markdown-content">
+                {{ page.rendered_content|safe }}
+            </article>
+            
+            <!-- Share Section -->
+            <div class="border-top pt-4 mt-5">
+                <h5 class="mb-3">Share this page</h5>
+                <div class="d-flex gap-2">
+                    <a href="https://twitter.com/intent/tweet?text={{ page.title|urlencode }}&url={{ request.build_absolute_uri }}" 
+                       class="btn btn-outline-primary btn-sm" target="_blank">
+                        <i class="fab fa-twitter me-1"></i>Twitter
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" 
+                       class="btn btn-outline-primary btn-sm" target="_blank">
+                        <i class="fab fa-facebook me-1"></i>Facebook
+                    </a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" 
+                       class="btn btn-outline-primary btn-sm" target="_blank">
+                        <i class="fab fa-linkedin me-1"></i>LinkedIn
+                    </a>
+                    <button class="btn btn-outline-secondary btn-sm" onclick="copyToClipboard()">
+                        <i class="fas fa-link me-1"></i>Copy Link
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Comments Section -->
+            <div class="mt-5">
+                <h4 class="mb-4">
+                    <i class="fas fa-comments me-2"></i>
+                    Comments ({{ comments.count }})
+                </h4>
+                
+                <!-- Existing Comments -->
+                {% for comment in comments %}
+                    <div class="comment">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <strong>{{ comment.author_name }}</strong>
+                            <small class="text-muted">{{ comment.created_at|date:"M d, Y g:i A" }}</small>
+                        </div>
+                        <p class="mb-0">{{ comment.content|linebreaks }}</p>
+                    </div>
+                {% empty %}
+                    <p class="text-muted">No comments yet. Be the first to comment!</p>
+                {% endfor %}
+                
+                <!-- Comment Form -->
+                {% if user.is_authenticated %}
+                    <div class="comment-form mt-4">
+                        <h5 class="mb-3">Leave a Comment</h5>
+                        <form id="commentForm">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="author_name" class="form-label">Name *</label>
+                                    <input type="text" class="form-control" id="author_name" name="author_name" 
+                                           value="{{ user.get_full_name|default:user.username }}" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="author_email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="author_email" name="author_email" 
+                                           value="{{ user.email }}" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="content" class="form-label">Comment *</label>
+                                <textarea class="form-control" id="content" name="content" rows="4" 
+                                          placeholder="Share your thoughts..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Comment
+                            </button>
+                        </form>
+                        <div id="commentMessage" class="mt-3"></div>
+                    </div>
+                {% else %}
+                    <div class="text-center py-4">
+                        <p class="text-muted">Please <a href="/admin/login/">login</a> to leave a comment.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Related Pages -->
+            {% if related_pages %}
+                <div class="sidebar mb-4">
+                    <h5 class="mb-3">
+                        <i class="fas fa-book text-primary me-2"></i>Related Pages
+                    </h5>
+                    {% for related_page in related_pages %}
+                        <div class="mb-3 pb-3 border-bottom">
+                            <h6 class="mb-1">
+                                <a href="{{ related_page.get_absolute_url }}" class="text-decoration-none text-dark">
+                                    {{ related_page.title }}
+                                </a>
+                            </h6>
+                            <p class="small text-muted mb-1">{{ related_page.excerpt|truncatewords:15 }}</p>
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>{{ related_page.reading_time }} min read
+                            </small>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <!-- Table of Contents (if available) -->
+            <div class="sidebar">
+                <h5 class="mb-3">
+                    <i class="fas fa-list text-primary me-2"></i>Page Info
+                </h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <strong>Author:</strong> {{ page.author.get_full_name|default:page.author.username }}
+                    </li>
+                    <li class="mb-2">
+                        <strong>Published:</strong> {{ page.created_at|date:"F d, Y" }}
+                    </li>
+                    {% if page.updated_at != page.created_at %}
+                        <li class="mb-2">
+                            <strong>Updated:</strong> {{ page.updated_at|date:"F d, Y" }}
+                        </li>
+                    {% endif %}
+                    <li class="mb-2">
+                        <strong>Reading Time:</strong> {{ page.reading_time }} minutes
+                    </li>
+                    {% if page.category %}
+                        <li class="mb-2">
+                            <strong>Category:</strong> 
+                            <a href="{% url 'content:category_detail' page.category.slug %}">{{ page.category.name }}</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Copy to clipboard functionality
+    function copyToClipboard() {
+        navigator.clipboard.writeText(window.location.href).then(function() {
+            alert('Link copied to clipboard!');
+        });
+    }
+    
+    // Comment form submission
+    document.getElementById('commentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(this);
+        const messageDiv = document.getElementById('commentMessage');
+        
+        fetch("{% url 'content:add_comment' page.slug %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                messageDiv.innerHTML = '<div class="alert alert-success">' + data.message + '</div>';
+                this.reset();
+            } else {
+                messageDiv.innerHTML = '<div class="alert alert-danger">' + data.message + '</div>';
+            }
+        })
+        .catch(error => {
+            messageDiv.innerHTML = '<div class="alert alert-danger">An error occurred. Please try again.</div>';
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,199 @@
+{% extends 'content/base.html' %}
+
+{% block title %}All Pages - Django CMS{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h2 mb-0">
+                    <i class="fas fa-book text-primary me-2"></i>All Pages
+                </h1>
+                <div class="text-muted">
+                    {{ page_obj.paginator.count }} page{{ page_obj.paginator.count|pluralize }}
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="GET" class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="search" 
+                                   placeholder="Search pages..." value="{{ search_query }}">
+                        </div>
+                        <div class="col-md-3">
+                            <select name="category" class="form-select">
+                                <option value="">All Categories</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.slug }}" 
+                                            {% if current_category == category.slug %}selected{% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="tag" class="form-select">
+                                <option value="">All Tags</option>
+                                {% for tag in tags %}
+                                    <option value="{{ tag.slug }}" 
+                                            {% if current_tag == tag.slug %}selected{% endif %}>
+                                        {{ tag.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-filter me-1"></i>Filter
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Pages List -->
+            {% if pages %}
+                <div class="row">
+                    {% for page in pages %}
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    {% if page.featured %}
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="fas fa-star me-1"></i>Featured
+                                        </span>
+                                    {% endif %}
+                                    {% if page.category %}
+                                        <a href="{% url 'content:category_detail' page.category.slug %}" 
+                                           class="badge bg-primary text-decoration-none">
+                                            {{ page.category.name }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                
+                                <h5 class="card-title">
+                                    <a href="{{ page.get_absolute_url }}" class="text-decoration-none text-dark">
+                                        {{ page.title }}
+                                    </a>
+                                </h5>
+                                
+                                <p class="card-text text-muted">{{ page.excerpt|truncatewords:25 }}</p>
+                                
+                                <div class="content-meta mb-3">
+                                    <small>
+                                        <i class="fas fa-user me-1"></i>{{ page.author.get_full_name|default:page.author.username }}
+                                        <i class="fas fa-calendar ms-3 me-1"></i>{{ page.created_at|date:"M d, Y" }}
+                                        <i class="fas fa-clock ms-3 me-1"></i>{{ page.reading_time }} min read
+                                    </small>
+                                </div>
+                                
+                                <a href="{{ page.get_absolute_url }}" class="btn btn-primary btn-sm">
+                                    Read More <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if is_paginated %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if current_category %}category={{ current_category }}&{% endif %}{% if current_tag %}tag={{ current_tag }}&{% endif %}page={{ page_obj.previous_page_number }}">
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if current_category %}category={{ current_category }}&{% endif %}{% if current_tag %}tag={{ current_tag }}&{% endif %}page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% if search_query %}search={{ search_query }}&{% endif %}{% if current_category %}category={{ current_category }}&{% endif %}{% if current_tag %}tag={{ current_tag }}&{% endif %}page={{ page_obj.next_page_number }}">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                    <h4 class="text-muted">No pages found</h4>
+                    <p class="text-muted">
+                        {% if search_query or current_category or current_tag %}
+                            Try adjusting your search criteria.
+                        {% else %}
+                            No pages have been published yet.
+                        {% endif %}
+                    </p>
+                    {% if search_query or current_category or current_tag %}
+                        <a href="{% url 'content:page_list' %}" class="btn btn-primary">
+                            <i class="fas fa-times me-2"></i>Clear Filters
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Categories -->
+            {% if categories %}
+            <div class="sidebar mb-4">
+                <h5 class="mb-3">
+                    <i class="fas fa-folder text-primary me-2"></i>Categories
+                </h5>
+                <div class="list-group list-group-flush">
+                    {% for category in categories %}
+                    <a href="{% url 'content:category_detail' category.slug %}" 
+                       class="list-group-item list-group-item-action border-0 px-0 {% if current_category == category.slug %}active{% endif %}">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{ category.name }}</span>
+                            <span class="badge bg-primary rounded-pill">{{ category.pages.count }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Tags -->
+            {% if tags %}
+            <div class="sidebar">
+                <h5 class="mb-3">
+                    <i class="fas fa-tags text-primary me-2"></i>Popular Tags
+                </h5>
+                <div class="d-flex flex-wrap gap-2">
+                    {% for tag in tags %}
+                        <a href="{% url 'content:tag_detail' tag.slug %}" 
+                           class="tag {% if current_tag == tag.slug %}bg-primary text-white{% endif %}">
+                            {{ tag.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

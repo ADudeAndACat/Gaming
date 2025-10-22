@@ -1,0 +1,240 @@
+{% extends 'content/base.html' %}
+
+{% block title %}Search Results - Django CMS{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Search Header -->
+            <div class="mb-4">
+                <h1 class="h2 mb-2">
+                    <i class="fas fa-search text-primary me-2"></i>Search Results
+                </h1>
+                {% if query %}
+                    <p class="text-muted">
+                        Showing results for "<strong>{{ query }}</strong>" 
+                        ({{ pages.paginator.count }} result{{ pages.paginator.count|pluralize }})
+                    </p>
+                {% else %}
+                    <p class="text-muted">Use the form below to search for content.</p>
+                {% endif %}
+            </div>
+
+            <!-- Advanced Search Form -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-filter me-2"></i>Advanced Search
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="GET">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="q" class="form-label">Search Query</label>
+                                <input type="text" class="form-control" id="q" name="q" 
+                                       placeholder="Enter keywords..." value="{{ query }}">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="category" class="form-label">Category</label>
+                                <select name="category" id="category" class="form-select">
+                                    <option value="">All Categories</option>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}" 
+                                                {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                                            {{ category.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="tag" class="form-label">Tag</label>
+                                <select name="tag" id="tag" class="form-select">
+                                    <option value="">All Tags</option>
+                                    {% for tag in tags %}
+                                        <option value="{{ tag.id }}" 
+                                                {% if selected_tag == tag.id|stringformat:"s" %}selected{% endif %}>
+                                            {{ tag.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search me-2"></i>Search
+                                </button>
+                                <a href="{% url 'content:search' %}" class="btn btn-outline-secondary ms-2">
+                                    <i class="fas fa-times me-2"></i>Clear
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            {% if pages %}
+                <div class="row">
+                    {% for page in pages %}
+                    <div class="col-12 mb-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    {% if page.featured %}
+                                        <span class="badge bg-warning text-dark">
+                                            <i class="fas fa-star me-1"></i>Featured
+                                        </span>
+                                    {% endif %}
+                                    {% if page.category %}
+                                        <a href="{% url 'content:category_detail' page.category.slug %}" 
+                                           class="badge bg-primary text-decoration-none">
+                                            {{ page.category.name }}
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                
+                                <h5 class="card-title">
+                                    <a href="{{ page.get_absolute_url }}" class="text-decoration-none text-dark">
+                                        {{ page.title }}
+                                    </a>
+                                </h5>
+                                
+                                <p class="card-text text-muted">{{ page.excerpt|truncatewords:30 }}</p>
+                                
+                                <div class="content-meta mb-3">
+                                    <small>
+                                        <i class="fas fa-user me-1"></i>{{ page.author.get_full_name|default:page.author.username }}
+                                        <i class="fas fa-calendar ms-3 me-1"></i>{{ page.created_at|date:"M d, Y" }}
+                                        <i class="fas fa-clock ms-3 me-1"></i>{{ page.reading_time }} min read
+                                    </small>
+                                </div>
+                                
+                                <a href="{{ page.get_absolute_url }}" class="btn btn-primary btn-sm">
+                                    Read More <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                {% if pages.has_other_pages %}
+                <nav aria-label="Search results pagination">
+                    <ul class="pagination justify-content-center">
+                        {% if pages.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?q={{ query }}&category={{ selected_category }}&tag={{ selected_tag }}&page={{ pages.previous_page_number }}">
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for num in pages.paginator.page_range %}
+                            {% if pages.number == num %}
+                                <li class="page-item active">
+                                    <span class="page-link">{{ num }}</span>
+                                </li>
+                            {% elif num > pages.number|add:'-3' and num < pages.number|add:'3' %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?q={{ query }}&category={{ selected_category }}&tag={{ selected_tag }}&page={{ num }}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if pages.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?q={{ query }}&category={{ selected_category }}&tag={{ selected_tag }}&page={{ pages.next_page_number }}">
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            {% else %}
+                <div class="text-center py-5">
+                    {% if query %}
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No results found</h4>
+                        <p class="text-muted">
+                            No pages match your search criteria. Try different keywords or adjust your filters.
+                        </p>
+                    {% else %}
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">Search Content</h4>
+                        <p class="text-muted">
+                            Use the search form above to find specific content.
+                        </p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Search Tips -->
+            <div class="sidebar mb-4">
+                <h5 class="mb-3">
+                    <i class="fas fa-lightbulb text-primary me-2"></i>Search Tips
+                </h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Use specific keywords for better results
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Filter by category or tag to narrow results
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Search looks through titles, content, and excerpts
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        Use quotes for exact phrase matching
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Popular Categories -->
+            {% if categories %}
+            <div class="sidebar mb-4">
+                <h5 class="mb-3">
+                    <i class="fas fa-folder text-primary me-2"></i>Categories
+                </h5>
+                <div class="list-group list-group-flush">
+                    {% for category in categories %}
+                    <a href="{% url 'content:category_detail' category.slug %}" 
+                       class="list-group-item list-group-item-action border-0 px-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>{{ category.name }}</span>
+                            <span class="badge bg-primary rounded-pill">{{ category.pages.count }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Popular Tags -->
+            {% if tags %}
+            <div class="sidebar">
+                <h5 class="mb-3">
+                    <i class="fas fa-tags text-primary me-2"></i>Popular Tags
+                </h5>
+                <div class="d-flex flex-wrap gap-2">
+                    {% for tag in tags %}
+                        <a href="{% url 'content:tag_detail' tag.slug %}" class="tag">
+                            {{ tag.name }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
